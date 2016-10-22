@@ -1,4 +1,10 @@
 import React, { Component } from 'react';
+
+import Timeline from './Timeline/Timeline'
+import Indicator from './Indicator/Indicator'
+import Track from './Track/Track'
+import Keyframe from './Keyframe/Keyframe'
+
 import './Tracker.scss';
 
 class Tracker extends Component {
@@ -11,4 +17,4 @@ class Tracker extends Component {
   }
 }
 
-export default Tracker;
+export {Tracker, Timeline, Indicator, Track, Keyframe}

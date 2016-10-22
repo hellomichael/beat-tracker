@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import Tracker from '../Tracker/Tracker'
-import Timeline from '../Tracker/Timeline/Timeline'
-import Indicator from '../Tracker/Indicator/Indicator'
-import Track from '../Tracker/Track/Track'
-import Keyframe from '../Tracker/Keyframe/Keyframe'
+
+import {Tracker, Timeline, Indicator, Track, Keyframe} from '../Tracker/Tracker'
 
 import './App.scss'
 
