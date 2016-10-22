@@ -13,12 +13,15 @@ $gutter-xxl:          100px;
 // Colors
 $white:               #FFF;
 $black:               #000;
-$light-grey:          #EEE;
-$grey:                #AAA;
-$dark-grey:           #222;
+
+$light-grey:          #202633;
+$grey:                #1a1f2a;
+$dark-grey:           #171a24;
+
+$blue:                #3f5e7a;
 
 // Type
-$font-family-sans-serif:    "DropDeadGorgeous", Arial, sans-serif;
+$font-family-sans-serif:    Arial, sans-serif;
 $font-family-serif:         Georgia, Times, "Times New Roman", serif;
 
 $font-size:                 16px;
@@ -51,11 +54,11 @@ $icon-xl:                   75px;
 
 // Easing
 $ease-linear:               linear;
-$ease-in-out:               ease-in-out;
-$ease-in-out-back:          cubic-bezier(0.740, -0.315, 0.525, 1.005);
 $ease-out-quint:            cubic-bezier(0.230, 1.000, 0.320, 1.000);
 $ease-out-expo:             cubic-bezier(0.050, 0.995, 0.220, 1.000);
-$ease-in-out-cubic:         cubic-bezier(0.645, 0.045, 0.355, 1.000); 
+$ease-in-out:               ease-in-out;
+$ease-in-out-back:          cubic-bezier(0.740, -0.315, 0.525, 1.005);
+$ease-in-out-cubic:         cubic-bezier(0.645, 0.045, 0.355, 1.000);
 $ease-in-out-quart:         cubic-bezier(0.770, 0.000, 0.175, 1.000);
 $ease-in-out-quint:         cubic-bezier(0.860, 0.000, 0.070, 1.000);
 $ease-in-out-expo:          cubic-bezier(1.000, 0.000, 0.000, 1.000);
@@ -76,6 +79,3 @@ $screen-lg-desktop:          $screen-lg-min;
 $screen-xs-max:              ($screen-sm-min - 1);
 $screen-sm-max:              ($screen-md-min - 1);
 $screen-md-max:              ($screen-lg-min - 1);
-
-// Kanye Distance
-$kanye-distance:             275px;

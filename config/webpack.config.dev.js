@@ -183,7 +183,7 @@ module.exports = {
     // See https://github.com/facebookincubator/create-react-app/issues/186
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
 
-    new extractTextPlugin('App.css', {
+    new ExtractTextPlugin('App.css', {
       allChunks: true
     })
   ],

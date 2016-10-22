@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Base
+   ========================================================================== */
+html, body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: $grey;
+  overflow: hidden;
+}
+
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  color: $white;
+  background: $black;
+  font-family: $font-family-sans-serif;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+a {
+  background-color: transparent;
+
+  &:active, &:active, &:hover {
+    outline: 0;
+  }
+}
+
+/* ==========================================================================
+   Type
+   ========================================================================== */
+h1 {
+  @include rem(font-size, $h2-size);
+  @include rem(line-height, $h2-height);
+
+  @media screen and (min-width: $screen-sm-min) {
+    @include rem(font-size, $h1-size);
+    @include rem(line-height, $h1-height);
+  }
+}
+
+h2 {
+  @include rem(font-size, $h3-size);
+  @include rem(line-height, $h3-height);
+
+  @media screen and (min-width: $screen-sm-min) {
+    @include rem(font-size, $h2-size);
+    @include rem(line-height, $h2-height);
+  }
+}
+
+h3 {
+  @include rem(font-size, $h4-size);
+  @include rem(line-height, $h4-height);
+
+  @media screen and (min-width: $screen-sm-min) {
+    @include rem(font-size, $h3-size);
+    @include rem(line-height, $h3-height);
+  }
+}
+
+h4 {
+  @include rem(font-size, $h5-size);
+  @include rem(line-height, $h5-height);
+
+  @media screen and (min-width: $screen-sm-min) {
+    @include rem(font-size, $h4-size);
+    @include rem(line-height, $h4-height);
+  }
+}
+
+h5 {
+  @include rem(font-size, $h6-size);
+  @include rem(line-height, $h6-height);
+
+  @media screen and (min-width: $screen-sm-min) {
+    @include rem(font-size, $h5-size);
+    @include rem(line-height, $h5-height);
+  }
+}
+
+h6 {
+  @include rem(font-size, $h6-size);
+  @include rem(line-height, $h6-height);
+}
+
+h1, h2, h3, h4 {
+  margin: 0 0 $gutter-sm;
+}
+
+h5, h6 {
+  margin: 0 0 $gutter-xxs;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Icons
+   ========================================================================== */
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: $icon-md;
+  height: $icon-md;
+
+  &-xs {
+    width: $icon-xs;
+    height: $icon-xs;
+  }
+
+  &-sm {
+    width: $icon-sm;
+    height: $icon-sm;
+  }
+
+  &-lg {
+    width: $icon-lg;
+    height: $icon-lg;
+  }
+
+  &-xl {
+    width: $icon-xl;
+    height: $icon-xl;
+  }
+}
