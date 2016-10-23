@@ -1,6 +1,15 @@
 /* ==========================================================================
    Placeholders
    ========================================================================== */
+// clearfix
+%clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 // Pseudo elements
 %before-after {
   position: relative;

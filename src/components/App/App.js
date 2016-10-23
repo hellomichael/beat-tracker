@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import {Tracker, Timeline, Indicator, Track, Keyframe} from '../Tracker/Tracker'
+import {Tracker, Player, Controls, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
 
 import './App.scss'
 
@@ -8,16 +8,17 @@ class App extends Component {
   render() {
     return (
       <Tracker>
-        <Timeline>
-          <Indicator>
+        <Player>
+          <Controls/>
 
-          </Indicator>
-        </Timeline>
+          <Timecode>
+            <Indicator/>
+          </Timecode>
+        </Player>
 
-        <Track>
-          <Keyframe>
 
-          </Keyframe>
+        <Track title="Track 1">
+          <Keyframe></Keyframe>
         </Track>
       </Tracker>
     );

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Keyframe extends Component {
   render() {
     return (
-      <div className="tracker__keyframe">
+      <div className="tracker__track__keyframe">
       </div>
     );
   }

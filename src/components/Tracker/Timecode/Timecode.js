@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Timeline extends Component {
+class Timecode extends Component {
   render() {
     return (
-      <div className="tracker__timeline">
+      <div className="tracker__player__timecode">
         {this.props.children}
       </div>
     );
   }
 }
 
-export default Timeline;
+export default Timecode;

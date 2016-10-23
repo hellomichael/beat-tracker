@@ -4,7 +4,11 @@ class Track extends Component {
   render() {
     return (
       <div className="tracker__track">
-        {this.props.children}
+        <small className="tracker__track__title">{this.props.title}</small>
+
+        <div className="tracker__track__timeline">
+          {this.props.children}
+        </div>
       </div>
     );
   }
