@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import YouTube from 'youtube-player'
-import {Tracker, Player, Controls, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
+import {Tracker, Preview, Output, Video, Player, Controls, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
 import * as Utils from './Utils.js'
 import './App.scss'
 
@@ -19,13 +19,12 @@ class App extends Component {
   componentDidMount() {
     // Update states
     this.setState({
-      youtube: new YouTube(document.querySelector('.tracker__video'), {
-        width: window.innerWidth - (86) - (window.innerWidth * 0.15),
-        height: window.innerHeight/2,
+      youtube: new YouTube(document.querySelector('.tracker__preview__video'), {
+        height: '100%',
+        width: '100%',
         videoId: 'CDyrWWPt534',
         playerVars: {
           autoplay: 1,
-          // controls: 0,
           modestbranding: 1,
           rel: 0,
           showInfo: 0,
@@ -35,6 +34,13 @@ class App extends Component {
     })
 
     this.playVideo()
+    this.handleResize()
+  }
+
+  handleResize() {
+    window.addEventListener('resize', () => {
+
+    })
   }
 
   stopVideo () {
@@ -64,6 +70,11 @@ class App extends Component {
   render() {
     return (
       <Tracker>
+        <Preview>
+          <Output></Output>
+          <Video></Video>
+        </Preview>
+
         <Player>
           <Controls/>
 
@@ -71,7 +82,6 @@ class App extends Component {
             <Indicator progress={this.state.progress}/>
           </Timecode>
         </Player>
-
 
         <Track title="Track 1">
           <Keyframe></Keyframe>

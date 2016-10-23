@@ -9,67 +9,70 @@ $tracker-pane:       15%;
 .#{$module} {
   @extend %center;
   position: relative;
-  height: 300px;
+  height: 100%;
   width: 100%;
-  border: 1px solid $grey;
-  box-shadow: 5px 5px 5px rgba(0,0,0,0.05);
+  background-color: $dark-grey;
+  border: 1px solid $black;
+  box-shadow: 3px 3px 3px rgba($black, 0.05);
 
   /* ==========================================================================
   Elements
   ========================================================================== */
-  &__video {
-    position: absolute;
-    bottom: 100%;
-    left: $tracker-pane;
-    // display: none;
+  &__preview, &__player, &__track {
+    display: flex;
+
+    > * {
+      &:first-child {
+        flex: 1 25%;
+        border-right: 1px solid $black;
+      }
+
+      &:last-child {
+        flex: 1 75%;
+      }
+    }
   }
 
+  // Preview
+  &__preview {
+    height: 70%;
+    border-bottom: 1px solid $black;
+  }
+
+  // Player
   &__player {
-    @extend %clearfix;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-bottom: 1px solid $grey;
+    height: 30%;
+    overflow: visible;
 
     &__controls {
-      display: inline-block;
-      float: left;
-      height: 100%;
-      width: $tracker-pane;
-      padding: 0 0 0 $gutter-sm;
-      line-height: 25px;
-      border-right: 1px solid $grey;
+
     }
 
     &__timecode {
-      float: right;
       position: relative;
-      display: block;
       height: 100%;
-      width: calc(100% - #{$tracker-pane});
     }
 
     &__indicator {
       @extend %before-after;
+      display: inline-block;
       position: absolute;
       left: 0;
       top: 0;
       z-index: 999;
       padding: 0 0 25px;
-      display: inline-block;
       width: 1px;
       height: 100%;
-      border-left: 1px solid $aqua;
-      border-right: 1px solid $black;
       cursor: pointer;
+      background-color: $aqua;
 
       &:before {
         @extend %center-horizontally;
+        position: relative;
+        top: -1px;
         display: block;
         width: 8px;
-        height: 10px;
+        height: 12px;
         background-color: $aqua;
       }
 
@@ -85,29 +88,21 @@ $tracker-pane:       15%;
     }
   }
 
+  // Track
   &__track {
-    @extend %clearfix;
     position: absolute;
     bottom: 0;
-    height: 25px;
     width: 100%;
-    border-top: 1px solid $grey;
+    height: 25px;
+    border-top: 1px solid $black;
 
     &__title {
-      display: inline-block;
-      float: left;
-      height: 100%;
-      width: $tracker-pane;
       padding: 0 0 0 $gutter-sm;
       line-height: 25px;
     }
 
     &__timeline {
       position: relative;
-      float: right;
-      height: 100%;
-      width: calc(100% - #{$tracker-pane});
-      background-color: $dark-grey;
     }
 
     &__keyframe {
