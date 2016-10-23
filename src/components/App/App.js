@@ -28,8 +28,6 @@ class App extends Component {
         this.state.keyframes.concat(this.state.currentTime)
       })
     }
-
-    console.log(this.state.keyframes)
   }
 
   loadVideo() {
@@ -47,6 +45,9 @@ class App extends Component {
           iv_load_policy: 3,
         }
       })
+    }, () => {
+      this.state.youtube.getDuration()
+      .then(seconds => this.setState({duration: Utils.getTwoDecimalPlaces(seconds)}))
     })
 
     this.playVideo()
@@ -63,9 +64,6 @@ class App extends Component {
         this.state.youtube.getCurrentTime()
         .then(seconds => this.setState({currentTime: Utils.getTwoDecimalPlaces(seconds)}))
 
-        this.state.youtube.getDuration()
-        .then(seconds => this.setState({duration: Utils.getTwoDecimalPlaces(seconds)}))
-
         this.setState({progress: Utils.getTwoDecimalPlaces(this.state.currentTime/this.state.duration * 100)})
       }, 1000/60)
     })
@@ -80,7 +78,7 @@ class App extends Component {
     return (
       <Tracker onClick={this.handleClick.bind(this)}>
         <Preview>
-          <Output></Output>
+          <Output keyframes={this.state.keyframes}></Output>
           <Video></Video>
         </Preview>
 
@@ -93,9 +91,9 @@ class App extends Component {
         </Player>
 
         <Track title="Track 1" >
-          {this.state.keyframes.map(keyframe => {
+          {this.state.keyframes.map((keyframe, index) => {
             return (
-              <Keyframe progress={(keyframe/this.state.duration * 100)}></Keyframe>
+              <Keyframe key={`keyframe-${index}`} progress={(keyframe/this.state.duration * 100)}></Keyframe>
             )
           })}
         </Track>

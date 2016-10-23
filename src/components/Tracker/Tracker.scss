@@ -23,12 +23,12 @@ $tracker-pane:       15%;
 
     > * {
       &:first-child {
-        flex: 1 25%;
+        flex: 1 20%;
         border-right: 1px solid $black;
       }
 
       &:last-child {
-        flex: 1 75%;
+        flex: 1 80%;
       }
     }
   }
@@ -37,6 +37,24 @@ $tracker-pane:       15%;
   &__preview {
     height: 70%;
     border-bottom: 1px solid $black;
+
+    &__output {
+      margin: 0;
+      padding: $gutter-sm;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+        background-color: transparent;
+        transform: translateX(10px)
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.25);
+        transform: translateX(-10px)
+      }
+    }
   }
 
   // Player

@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import * as Utils from '../../App/Utils.js'
 
 class Output extends Component {
   render() {
-    return (
-      <div className="tracker__preview__output">
+    let keyframes = this.props.keyframes.map((keyframe) => {
+      return {
+        'timecode': Utils.getTimecode(keyframe)
+      }
+    })
 
-      </div>
+    let json = {
+      'keyframes': keyframes
+    }
+
+    return (
+      <pre className="tracker__preview__output">{`${JSON.stringify(json, undefined, 2)}`}</pre>
     );
   }
 }
