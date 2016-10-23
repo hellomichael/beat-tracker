@@ -17,6 +17,13 @@ $tracker-pane:       15%;
   /* ==========================================================================
   Elements
   ========================================================================== */
+  &__video {
+    position: absolute;
+    bottom: 100%;
+    left: $tracker-pane;
+    // display: none;
+  }
+
   &__player {
     @extend %clearfix;
     position: absolute;
@@ -54,8 +61,8 @@ $tracker-pane:       15%;
       display: inline-block;
       width: 1px;
       height: 100%;
-      background-color: $aqua;
-      border-right: 1px solid rgba(0,0,0,0.25);
+      border-left: 1px solid $aqua;
+      border-right: 1px solid $black;
       cursor: pointer;
 
       &:before {

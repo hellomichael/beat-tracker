@@ -47,7 +47,8 @@
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
     "webpack-dev-server": "1.16.1",
-    "whatwg-fetch": "1.0.0"
+    "whatwg-fetch": "1.0.0",
+    "youtube-player": "^3.0.4"
   },
   "dependencies": {
     "react": "^15.3.2",
