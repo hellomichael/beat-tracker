@@ -17,13 +17,11 @@ import './Tracker.scss'
 class Tracker extends Component {
   render() {
     return (
-      <div className="tracker">
+      <div className="tracker" onClick={this.props.onClick}>
         {this.props.children}
       </div>
     )
   }
 }
-
-
 
 export {Tracker, Preview, Output, Video, Player, Controls, Timecode, Indicator, Track, Keyframe}

@@ -17,6 +17,22 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.loadVideo()
+  }
+
+  handleClick(event) {
+    event.preventDefault()
+
+    if (this.state.currentTime) {
+      this.setState({keyframes:
+        this.state.keyframes.concat(this.state.currentTime)
+      })
+    }
+
+    console.log(this.state.keyframes)
+  }
+
+  loadVideo() {
     // Update states
     this.setState({
       youtube: new YouTube(document.querySelector('.tracker__preview__video'), {
@@ -34,21 +50,9 @@ class App extends Component {
     })
 
     this.playVideo()
-    this.handleResize()
   }
 
-  handleResize() {
-    window.addEventListener('resize', () => {
-
-    })
-  }
-
-  stopVideo () {
-    cancelAnimationFrame(this.state.requestAnimationFrame)
-    clearTimeout(this.state.timeout)
-  }
-
-  playVideo () {
+  playVideo() {
     this.setState({
       timeout: setTimeout(() => {
         this.setState({
@@ -67,9 +71,14 @@ class App extends Component {
     })
   }
 
+  stopVideo() {
+    cancelAnimationFrame(this.state.requestAnimationFrame)
+    clearTimeout(this.state.timeout)
+  }
+
   render() {
     return (
-      <Tracker>
+      <Tracker onClick={this.handleClick.bind(this)}>
         <Preview>
           <Output></Output>
           <Video></Video>
@@ -83,11 +92,15 @@ class App extends Component {
           </Timecode>
         </Player>
 
-        <Track title="Track 1">
-          <Keyframe></Keyframe>
+        <Track title="Track 1" >
+          {this.state.keyframes.map(keyframe => {
+            return (
+              <Keyframe progress={(keyframe/this.state.duration * 100)}></Keyframe>
+            )
+          })}
         </Track>
       </Tracker>
-    );
+    )
   }
 }
 
