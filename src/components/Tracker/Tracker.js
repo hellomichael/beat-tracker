@@ -5,7 +5,7 @@ import Output from './Output/Output'
 import Video from './Video/Video'
 
 import Player from './Player/Player'
-import Controls from './Controls/Controls'
+import Playlist from './Playlist/Playlist'
 import Timecode from './Timecode/Timecode'
 import Indicator from './Indicator/Indicator'
 
@@ -24,4 +24,4 @@ class Tracker extends Component {
   }
 }
 
-export {Tracker, Preview, Output, Video, Player, Controls, Timecode, Indicator, Track, Keyframe}
+export {Tracker, Preview, Output, Video, Player, Playlist, Timecode, Indicator, Track, Keyframe}

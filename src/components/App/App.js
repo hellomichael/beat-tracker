@@ -1,23 +1,31 @@
 import React, { Component } from 'react'
+import Firebase from '../Firebase/Firebase'
 import YouTube from 'youtube-player'
-import {Tracker, Preview, Output, Video, Player, Controls, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
+import {Tracker, Preview, Output, Video, Player, Playlist, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
 import * as Utils from './Utils.js'
 import './App.scss'
 
+let playlist = Firebase.ref('playlist')
+
 class App extends Component {
   state = {
-    id:                     null,
     youtube:                null,
     currentTime:            null,
     duration:               null,
     progress:               null,
     timeout:                null,
     requestAnimationFrame:  null,
+
+    playlist:               [],
     keyframes:              []
   }
 
   componentDidMount() {
-    this.loadVideo()
+    playlist.on('value', snapshot => {
+      this.setState({
+        playlist: snapshot.val()
+      })
+    })
   }
 
   handleClick(event) {
@@ -28,6 +36,15 @@ class App extends Component {
         this.state.keyframes.concat(this.state.currentTime)
       })
     }
+  }
+
+  addTrack(id, keyframes) {
+    console.log(id, keyframes)
+
+    playlist.push({
+      id:         id,
+      keyframes:  keyframes
+    })
   }
 
   loadVideo() {
@@ -83,14 +100,14 @@ class App extends Component {
         </Preview>
 
         <Player>
-          <Controls/>
+          <Playlist tracks={this.state.playlist} addTrack={this.addTrack.bind(this)}/>
 
           <Timecode>
             <Indicator progress={this.state.progress}/>
           </Timecode>
         </Player>
 
-        <Track title="Track 1" >
+        <Track title="Track 1">
           {this.state.keyframes.map((keyframe, index) => {
             return (
               <Keyframe key={`keyframe-${index}`} progress={(keyframe/this.state.duration * 100)}></Keyframe>

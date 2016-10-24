@@ -132,6 +132,14 @@ a {
   text-decoration: none;
 }
 
+.btn {
+  display: inline-block;
+  margin: 0 auto;
+  padding: $gutter-xxs $gutter-sm;
+  background-color: $blue;
+  border-radius: 999px;
+}
+
 /* ==========================================================================
    Icons
    ========================================================================== */
