@@ -6,17 +6,9 @@ class Playlist extends Component {
     editing: false
   }
 
-  addTrack (id, keyframes) {
-    this.setState({editing: false})
-    event.target.blur()
-    this.props.addTrack(id, keyframes)
-  }
-
   handleKeyPress(event) {
-    let id = event.target.value
-
-    if (event.key === 'Enter' && id.length) {
-      this.addTrack(event.target.value, [])
+    if (event.key === 'Enter') {
+      event.target.blur()
     }
   }
 
@@ -24,11 +16,17 @@ class Playlist extends Component {
     let id = event.target.value
 
     if (id.length) {
-      this.addTrack(event.target.value, [])
+      this.setState({editing: false})
+      this.props.addTrack(event.target.value, [])
+    }
+
+    else {
+      this.setState({editing: false})
+      event.target.blur()
     }
   }
 
-  handleClick(event) {
+  handleEditing(event) {
     this.setState({editing: true})
   }
 
@@ -37,12 +35,12 @@ class Playlist extends Component {
 
     return (
       <ul className="tracker__player__playlist">
-        {_.map(this.props.tracks, (track, index) => {
-          return <li key={`track-${index}`}>{track.id}</li>
+        {_.map(this.props.tracks, (track, key) => {
+          return <li className={(key === this.props.activeTrack ? 'active' : null)} key={key} onClick={this.props.loadTrack.bind(this, key)}>{track.id}</li>
         })}
 
         {inputTrack}
-        <li onClick={this.handleClick.bind(this)}>Add Track +</li>
+        <li onClick={this.handleEditing.bind(this)}>Add Track +</li>
       </ul>
     )
   }
