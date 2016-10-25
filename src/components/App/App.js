@@ -4,6 +4,7 @@ import YouTube from 'youtube-player'
 // import Query from 'query-string'
 // import CreateHistory from 'history/createBrowserHistory'
 import {Tracker, Preview, Output, Video, Player, Playlist, Timecode, Indicator, Track, Keyframe} from '../Tracker/Tracker'
+import _ from 'lodash'
 import * as Utils from './Utils.js'
 import './App.scss'
 
@@ -38,7 +39,19 @@ class App extends Component {
     playlist.limitToLast(1).on('value', snapshot => {
       if (snapshot.val()) {
         let key = Object.keys(snapshot.val())[0]
-        this.loadTrack(key)
+        let keyframes = (snapshot.val()[key].keyframes) ? snapshot.val()[key].keyframes : []
+
+        // New Track
+        if (key !== this.state.currentTrack) {
+          this.loadTrack(key, keyframes)
+        }
+
+        // New Keyframe
+        else {
+          this.setState({
+            keyframes: keyframes
+          })
+        }
       }
     })
 
@@ -82,7 +95,7 @@ class App extends Component {
     })
 
     // Add keyframe listener
-    document.addEventListener('keypress', this.handleKeyPress.bind(this), false);
+    document.addEventListener('keypress', this.handleKeyPress.bind(this));
   }
 
   addTrack(id, keyframes) {
@@ -93,9 +106,10 @@ class App extends Component {
     })
   }
 
-  loadTrack(key) {
+  loadTrack(key, keyframes) {
     this.setState({
-      currentTrack: key
+      currentTrack: key,
+      keyframes: keyframes
     }, () => {
       // Stop track
       this.stopTrack()
@@ -137,13 +151,19 @@ class App extends Component {
     clearTimeout(this.state.timeout)
   }
 
+  updateKeyframes () {
+    let keyframes = _.sortBy(this.state.keyframes.concat(this.state.currentTime))
+
+    playlist.update({
+      [`${this.state.currentTrack}/keyframes`] : keyframes
+    })
+  }
+
   handleKeyPress(event) {
     event.preventDefault()
 
     if (event.key === ' ' && this.state.currentTime) {
-      this.setState({keyframes:
-        this.state.keyframes.concat(this.state.currentTime)
-      })
+      this.updateKeyframes()
     }
   }
 
