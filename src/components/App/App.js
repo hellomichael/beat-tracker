@@ -14,22 +14,20 @@ let playlist = Firebase.ref('playlist')
 class App extends Component {
   state = {
     currentTrack:           null,
-
     youtube:                null,
     currentTime:            null,
     duration:               null,
     progress:               null,
-
     timeout:                null,
     requestAnimationFrame:  null,
-
-    playlist:               [],
-    keyframes:              []
+    playlist:               []
   }
 
   componentDidMount() {
     // Update state when firebase is updated
     playlist.on('value', snapshot => {
+      console.log('Firebase: DB Updated')
+
       this.setState({
         playlist: snapshot.val()
       })
@@ -37,20 +35,12 @@ class App extends Component {
 
     // Play the last video uploaded
     playlist.limitToLast(1).on('value', snapshot => {
+      console.log('Firebase: DB New Item')
       if (snapshot.val()) {
         let key = Object.keys(snapshot.val())[0]
-        let keyframes = (snapshot.val()[key].keyframes) ? snapshot.val()[key].keyframes : []
 
-        // New Track
         if (key !== this.state.currentTrack) {
-          this.loadTrack(key, keyframes)
-        }
-
-        // New Keyframe
-        else {
-          this.setState({
-            keyframes: keyframes
-          })
+          this.loadTrack(key)
         }
       }
     })
@@ -98,18 +88,16 @@ class App extends Component {
     document.addEventListener('keypress', this.handleKeyPress.bind(this));
   }
 
-  addTrack(id, keyframes) {
+  addTrack(id) {
     // Add track to firebase
     playlist.push({
-      id:         id,
-      keyframes:  keyframes
+      id:         id
     })
   }
 
-  loadTrack(key, keyframes) {
+  loadTrack(key) {
     this.setState({
-      currentTrack: key,
-      keyframes: keyframes
+      currentTrack: key
     }, () => {
       // Stop track
       this.stopTrack()
@@ -123,7 +111,7 @@ class App extends Component {
   }
 
   updateTrack() {
-    console.log('Update track')
+    // console.log('Update track')
     this.setState({
       timeout: setTimeout(() => {
         // Create request animation
@@ -152,10 +140,11 @@ class App extends Component {
   }
 
   updateKeyframes () {
-    let keyframes = _.sortBy(this.state.keyframes.concat(this.state.currentTime))
+    let currentKeyframes = (this.state.playlist[this.state.currentTrack] && this.state.playlist[this.state.currentTrack].keyframes) ? this.state.playlist[this.state.currentTrack].keyframes : []
+    let newKeyframes = _.sortBy(currentKeyframes.concat(this.state.currentTime))
 
     playlist.update({
-      [`${this.state.currentTrack}/keyframes`] : keyframes
+      [`${this.state.currentTrack}/keyframes`] : newKeyframes
     })
   }
 
@@ -168,10 +157,12 @@ class App extends Component {
   }
 
   render() {
+    let keyframes = (this.state.playlist[this.state.currentTrack] && this.state.playlist[this.state.currentTrack].keyframes) ? this.state.playlist[this.state.currentTrack].keyframes : []
+
     return (
       <Tracker>
         <Preview>
-          <Output keyframes={this.state.keyframes}></Output>
+          <Output keyframes={keyframes}></Output>
           <Video></Video>
         </Preview>
 
@@ -191,11 +182,13 @@ class App extends Component {
         </Player>
 
         <Track>
-          {this.state.keyframes.map((keyframe, index) => {
+          {keyframes.map((keyframe, index) => {
             return (
               <Keyframe
                 key={`keyframe-${index}`}
-                progress={(keyframe/this.state.duration * 100)}
+                progress={this.state.currentTime}
+                seconds={keyframe}
+                position={(keyframe/this.state.duration * 100)}
               />
             )
           })}

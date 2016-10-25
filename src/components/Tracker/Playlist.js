@@ -17,7 +17,7 @@ class Playlist extends Component {
 
     if (id.length) {
       this.setState({editing: false})
-      this.props.addTrack(event.target.value, [])
+      this.props.addTrack(event.target.value)
     }
 
     else {
