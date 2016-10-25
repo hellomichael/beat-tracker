@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 
-import Preview from './Preview/Preview'
-import Output from './Output/Output'
-import Video from './Video/Video'
+import Preview from './Preview'
+import Output from './Output'
+import Video from './Video'
 
-import Player from './Player/Player'
-import Playlist from './Playlist/Playlist'
-import Timecode from './Timecode/Timecode'
-import Indicator from './Indicator/Indicator'
+import Player from './Player'
+import Playlist from './Playlist'
+import Timecode from './Timecode'
+import Indicator from './Indicator'
 
-import Track from './Track/Track'
-import Keyframe from './Keyframe/Keyframe'
+import Track from './Track'
+import Keyframe from './Keyframe'
 
 import './Tracker.scss'
 

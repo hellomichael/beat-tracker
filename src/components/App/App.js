@@ -80,6 +80,9 @@ class App extends Component {
         }
       })
     })
+
+    // Add keyframe listener
+    document.addEventListener('keypress', this.handleKeyPress.bind(this), false);
   }
 
   addTrack(id, keyframes) {
@@ -93,20 +96,20 @@ class App extends Component {
   loadTrack(key) {
     this.setState({
       currentTrack: key
-    })
+    }, () => {
+      // Stop track
+      this.stopTrack()
 
-    // Stop track
-    this.stopTrack()
-
-    // Load youtube video
-    this.state.youtube.loadVideoById({
-      'videoId': this.state.playlist[key].id,
-      'suggestedQuality': 'small'
+      //Load youtube video
+      this.state.youtube.loadVideoById({
+        'videoId': this.state.playlist[key].id,
+        'suggestedQuality': 'small'
+      })
     })
   }
 
   updateTrack() {
-    console.log('Play track')
+    console.log('Update track')
     this.setState({
       timeout: setTimeout(() => {
         // Create request animation
@@ -134,15 +137,15 @@ class App extends Component {
     clearTimeout(this.state.timeout)
   }
 
-  // handleClick(event) {
-  //   event.preventDefault()
-  //
-  //   if (this.state.currentTime) {
-  //     this.setState({keyframes:
-  //       this.state.keyframes.concat(this.state.currentTime)
-  //     })
-  //   }
-  // }
+  handleKeyPress(event) {
+    event.preventDefault()
+
+    if (event.key === ' ' && this.state.currentTime) {
+      this.setState({keyframes:
+        this.state.keyframes.concat(this.state.currentTime)
+      })
+    }
+  }
 
   render() {
     return (

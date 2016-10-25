@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import * as Utils from '../../App/Utils.js'
+import * as Utils from '../App/Utils.js'
 
 class Output extends Component {
   render() {
