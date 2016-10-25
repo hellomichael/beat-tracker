@@ -13,10 +13,12 @@ let playlist = Firebase.ref('playlist')
 class App extends Component {
   state = {
     currentTrack:           null,
+
     youtube:                null,
     currentTime:            null,
     duration:               null,
     progress:               null,
+
     timeout:                null,
     requestAnimationFrame:  null,
 
@@ -30,8 +32,6 @@ class App extends Component {
       this.setState({
         playlist: snapshot.val()
       })
-
-      console.log('Playlist', snapshot.val())
     })
 
     // Play the last video uploaded
@@ -56,31 +56,7 @@ class App extends Component {
           iv_load_policy: 3,
         }
       })
-    })
-  }
-
-  addTrack(id, keyframes) {
-    playlist.push({
-      id:         id,
-      keyframes:  keyframes
-    })
-  }
-
-  loadTrack(key) {
-    this.setState({
-      currentTrack: key
     }, () => {
-      // Stop track
-      this.stopTrack()
-
-      // Load youtube video
-      this.state.youtube.loadVideoById({
-        'videoId': this.state.playlist[key].id,
-        'startSeconds': 5,
-        'endSeconds': 60,
-        'suggestedQuality': 'large'}
-      )
-
       this.state.youtube.on('stateChange', event => {
         // '-1': 'unstarted',
         // 0: 'ended',
@@ -93,20 +69,47 @@ class App extends Component {
           throw new Error('Unknown state (' + event.data + ').');
         }
 
-        if (event.data === 1) {
+        else if (event.data === 1) {
+          console.log('State play')
           this.updateTrack()
         }
 
         else {
+          console.log('State stop')
           this.stopTrack()
         }
       })
     })
   }
 
+  addTrack(id, keyframes) {
+    // Add track to firebase
+    playlist.push({
+      id:         id,
+      keyframes:  keyframes
+    })
+  }
+
+  loadTrack(key) {
+    this.setState({
+      currentTrack: key
+    })
+
+    // Stop track
+    this.stopTrack()
+
+    // Load youtube video
+    this.state.youtube.loadVideoById({
+      'videoId': this.state.playlist[key].id,
+      'suggestedQuality': 'small'
+    })
+  }
+
   updateTrack() {
+    console.log('Play track')
     this.setState({
       timeout: setTimeout(() => {
+        // Create request animation
         this.setState({
           requestAnimationFrame: requestAnimationFrame(this.updateTrack.bind(this))
         })
@@ -126,6 +129,7 @@ class App extends Component {
   }
 
   stopTrack() {
+    console.log('Stop Track')
     cancelAnimationFrame(this.state.requestAnimationFrame)
     clearTimeout(this.state.timeout)
   }
