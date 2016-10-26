@@ -174,7 +174,7 @@ $tracker-pane:       15%;
       cursor: pointer;
       transition: 0.5s background-color $ease-out-expo, 0.5s box-shadow $ease-out-expo;
 
-      &--active {
+      &--selected {
         background-color: $yellow;
         box-shadow: 0 0 5px rgba($yellow, 0.5);
         z-index: 9999;

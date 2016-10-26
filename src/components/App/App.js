@@ -20,7 +20,8 @@ class App extends Component {
     progress:               null,
     timeout:                null,
     requestAnimationFrame:  null,
-    playlist:               []
+    playlist:               [],
+    selectedKeyframes:      []
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ class App extends Component {
         // 5: 'video cued'
 
         if (!event.data) {
-          throw new Error('Unknown state (' + event.data + ').');
+          throw new Error('Unknown state (' + event.data + ').')
         }
 
         else if (event.data === 1) {
@@ -85,7 +86,7 @@ class App extends Component {
     })
 
     // Add keyframe listener
-    document.addEventListener('keypress', this.handleKeyPress.bind(this));
+    document.addEventListener('keydown', this.handleKeyPress.bind(this))
   }
 
   addTrack(id) {
@@ -97,7 +98,8 @@ class App extends Component {
 
   loadTrack(key) {
     this.setState({
-      currentTrack: key
+      currentTrack: key,
+      selectedKeyframes: []
     }, () => {
       // Stop track
       this.stopTrack()
@@ -148,11 +150,62 @@ class App extends Component {
     })
   }
 
+  deleteKeyframes() {
+    console.log('Delete keyframes')
+
+    let currentKeyframes = (this.state.playlist[this.state.currentTrack] && this.state.playlist[this.state.currentTrack].keyframes) ? this.state.playlist[this.state.currentTrack].keyframes : []
+    let newKeyframes = [...currentKeyframes]
+
+    // Remove selected keyframes
+    this.state.selectedKeyframes.map((index) => {
+      newKeyframes.splice(index, 1)
+    })
+
+    playlist.update({
+      [`${this.state.currentTrack}/keyframes`] : newKeyframes
+    })
+
+    // Reset selected keyframes
+    this.setState({
+      selectedKeyframes: []
+    })
+  }
+
+  handleSelectedKeyframe(keyframe, event) {
+    console.log('Keyframe', keyframe)
+    console.log('Keyframes', this.state.selectedKeyframes)
+
+    // Deselect
+    if (_.includes(this.state.selectedKeyframes, keyframe)) {
+      console.log('Deselect')
+
+      let selectedKeyframes = [...this.state.selectedKeyframes]
+      selectedKeyframes.splice(_.indexOf(this.state.selectedKeyframes, keyframe), 1)
+
+      this.setState({
+        selectedKeyframes: selectedKeyframes
+      })
+    }
+
+    // Select
+    else {
+      console.log('Select')
+
+      this.setState({
+        selectedKeyframes: this.state.selectedKeyframes.concat(keyframe)
+      })
+    }
+  }
+
   handleKeyPress(event) {
     event.preventDefault()
 
     if (event.key === ' ' && this.state.currentTime) {
       this.updateKeyframes()
+    }
+
+    else if (event.key === 'Backspace') {
+      this.deleteKeyframes()
     }
   }
 
@@ -183,12 +236,17 @@ class App extends Component {
 
         <Track>
           {keyframes.map((keyframe, index) => {
+            let isSelected = _.includes(this.state.selectedKeyframes, index)
+
             return (
               <Keyframe
                 key={`keyframe-${index}`}
+                ref={`keyframe-${index}`}
                 progress={this.state.currentTime}
                 seconds={keyframe}
                 position={(keyframe/this.state.duration * 100)}
+                selected={isSelected}
+                onClick={this.handleSelectedKeyframe.bind(this, index)}
               />
             )
           })}
