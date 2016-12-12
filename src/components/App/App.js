@@ -173,7 +173,6 @@ class App extends Component {
 
   handleSelectedKeyframe(keyframe, event) {
     console.log('Keyframe', keyframe)
-    console.log('Keyframes', this.state.selectedKeyframes)
 
     // Deselect
     if (_.includes(this.state.selectedKeyframes, keyframe)) {

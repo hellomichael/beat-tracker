@@ -5,7 +5,8 @@ class Output extends Component {
   render() {
     let keyframes = this.props.keyframes.map((keyframe) => {
       return {
-        'timecode': Utils.getTimecode(keyframe)
+        'timecode': Utils.getTimecode(keyframe),
+        'action': ['bop']
       }
     })
 
