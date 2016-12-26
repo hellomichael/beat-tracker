@@ -157,8 +157,8 @@ class App extends Component {
     let newKeyframes = [...currentKeyframes]
 
     // Remove selected keyframes
-    this.state.selectedKeyframes.map((index) => {
-      newKeyframes.splice(index, 1)
+    this.state.selectedKeyframes.map(index => {
+      return newKeyframes.splice(index, 1)
     })
 
     playlist.update({
